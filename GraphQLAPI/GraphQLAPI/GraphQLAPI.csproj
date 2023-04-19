@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>5c1002ab-02a8-43fb-8192-f6abf1b96e86</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Common" Version="1.0.0" />
+    <PackageReference Include="graphiql" Version="2.0.0" />
+    <PackageReference Include="GraphQL" Version="7.4.0" />
+    <PackageReference Include="GraphQL.NewtonsoftJson" Version="7.4.0" />
+    <PackageReference Include="GraphQL.SystemTextJson" Version="7.4.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.12">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+</Project>
