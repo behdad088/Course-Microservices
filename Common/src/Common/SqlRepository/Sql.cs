@@ -26,6 +26,21 @@ namespace Common.SqlRepository
             }
         }
 
+        public T Execute<T>(Func<CourseDbContext, T> func)
+        {
+            using (var db = NewELIQSQLContext())
+            {
+                try
+                {
+                    return func(db);
+                }
+                catch (Microsoft.Data.SqlClient.SqlException e)
+                {
+                    throw new Exception("Something went wrong while executing sql query.", e);
+                }
+            }
+        }
+
         private CourseDbContext NewELIQSQLContext()
         {
             return new CourseDbContext(_connectionString);
