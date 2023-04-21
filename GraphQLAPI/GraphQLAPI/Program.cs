@@ -1,5 +1,4 @@
 using Common.Extensions;
-using GraphiQl;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,8 +18,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseGraphiQl("/graphql");
 
 app.UseHttpsRedirection();
 
