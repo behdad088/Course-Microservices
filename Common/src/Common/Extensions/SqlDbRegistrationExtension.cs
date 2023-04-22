@@ -10,14 +10,14 @@ namespace Common.Extensions
     {
         public static IServiceCollection AddSqlDatabase(this IServiceCollection services)
         {
-            services.AddSingleton(sp =>
+            services.AddSingleton<ISqlFactory>(sp =>
             {
                 var configuration = sp.GetService<IConfiguration>();
                 var sqlSettings = configuration?.GetSection(nameof(SqlSettings)).Get<SqlSettings>();
                 if (sqlSettings == null || string.IsNullOrEmpty(sqlSettings.ConnectionString))
                     throw new ArgumentNullException(nameof(sqlSettings));
 
-                var sql = new Sql(sqlSettings.ConnectionString);
+                var sql = new SqlFactory(sqlSettings.ConnectionString);
                 return sql;
             });
 
