@@ -2,7 +2,7 @@
 {
     public class CourseType
     {
-        public Guid Id { get; set; }
+        public int Id { get; set; }
         public string? Name { get; set; }
         public SubjectType? Subject { get; set; }
 
