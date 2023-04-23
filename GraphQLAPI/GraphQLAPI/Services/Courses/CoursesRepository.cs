@@ -1,14 +1,14 @@
-﻿using Common.SqlRepository;
-using Common.SqlRepository.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SQL.Database;
+using SQL.Database.Entities;
 
 namespace GraphQLAPI.Services.Courses
 {
     public class CoursesRepository
     {
-        private readonly ISqlFactory _sql;
+        private readonly IDatabaseFactory _sql;
 
-        public CoursesRepository(ISqlFactory sql)
+        public CoursesRepository(IDatabaseFactory sql)
         {
             _sql = sql ?? throw new ArgumentNullException(nameof(sql));
         }
@@ -17,22 +17,28 @@ namespace GraphQLAPI.Services.Courses
         {
             var courses = await _sql.ExecuteAsync(async db =>
             {
-                return await db.Courses.ToListAsync();
+                return await db.Courses
+                .Include(x => x.Instructor)
+                .ToListAsync();
             });
+
             return courses;
         }
 
-        public async Task<Course> GetAllCourseByIdAsync(int Id)
+        public async Task<Course> GetCourseByIdAsync(Guid Id)
         {
             var course = await _sql.ExecuteAsync(async db =>
             {
-                return await db.Courses.FirstOrDefaultAsync(x => x.Id == Id);
+                return await db.Courses
+                .Include(x => x.Instructor)
+                .FirstOrDefaultAsync(x => x.Id == Id);
             });
             return course;
         }
 
         public async Task<Course> CreateCourseAsync(Course course)
         {
+            course.Id = Guid.NewGuid();
             var addedCourse = await _sql.AddItemAsync(course);
             return addedCourse;
         }
@@ -43,7 +49,7 @@ namespace GraphQLAPI.Services.Courses
             return updatedCourse;
         }
 
-        public async Task<bool> DeleteCourseAsync(int id)
+        public async Task<bool> DeleteCourseAsync(Guid id)
         {
             var course = _sql.Execute(db =>
             {
