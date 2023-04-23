@@ -1,4 +1,6 @@
-﻿using GraphQLAPI.Schema.Subscriptions;
+﻿using GraphQLAPI.Schema.Mutations.Courses;
+using GraphQLAPI.Schema.Mutations.Instructors;
+using GraphQLAPI.Schema.Subscriptions;
 using GraphQLAPI.Services.Courses;
 using HotChocolate.Subscriptions;
 using SQL.Database.Entities;

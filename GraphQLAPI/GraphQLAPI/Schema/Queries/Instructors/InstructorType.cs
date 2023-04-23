@@ -1,4 +1,6 @@
-﻿namespace GraphQLAPI.Schema.Queries
+﻿using GraphQLAPI.Schema.Queries.Courses;
+
+namespace GraphQLAPI.Schema.Queries.Instructors
 {
     public class InstructorType
     {

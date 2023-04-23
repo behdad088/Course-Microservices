@@ -1,4 +1,4 @@
-﻿namespace GraphQLAPI.Schema.Queries
+﻿namespace GraphQLAPI.Schema.Queries.Students
 {
     public class StudentType
     {

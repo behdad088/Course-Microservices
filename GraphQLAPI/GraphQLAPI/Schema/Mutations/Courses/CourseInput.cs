@@ -1,6 +1,6 @@
-﻿using GraphQLAPI.Schema.Queries;
+﻿using GraphQLAPI.Schema.Queries.Courses;
 
-namespace GraphQLAPI.Schema.Mutations
+namespace GraphQLAPI.Schema.Mutations.Courses
 {
     public class CourseInput
     {

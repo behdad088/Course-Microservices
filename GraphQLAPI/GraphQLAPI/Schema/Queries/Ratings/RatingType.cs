@@ -1,4 +1,4 @@
-﻿namespace GraphQLAPI.Schema.Queries
+﻿namespace GraphQLAPI.Schema.Queries.Ratings
 {
     public class RatingType
     {

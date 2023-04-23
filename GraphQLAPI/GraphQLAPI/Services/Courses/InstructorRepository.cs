@@ -20,7 +20,7 @@ namespace GraphQLAPI.Services.Courses
             return addedInstructor;
         }
 
-        public async Task<Instructor> GetInstructorAsync(Guid id)
+        public async Task<Instructor> GetInstructorByAsync(Guid id)
         {
             var instructor = await _sql.ExecuteAsync(async db =>
             {
@@ -29,6 +29,16 @@ namespace GraphQLAPI.Services.Courses
                 .FirstOrDefaultAsync(x => x.Id == id);
             });
             return instructor;
+        }
+
+        public async Task<IEnumerable<Instructor>> GetManyByIds(IReadOnlyList<Guid> instrcutorsIds)
+        {
+            var instructors = await _sql.ExecuteAsync(async db =>
+            {
+                return await db.Instructors.Where(x => instrcutorsIds.Contains(x.Id)).ToListAsync();
+            });
+
+            return instructors;
         }
     }
 }
