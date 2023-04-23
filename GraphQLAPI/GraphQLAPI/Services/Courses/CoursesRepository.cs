@@ -18,7 +18,6 @@ namespace GraphQLAPI.Services.Courses
             var courses = await _sql.ExecuteAsync(async db =>
             {
                 return await db.Courses
-                .Include(x => x.Instructor)
                 .ToListAsync();
             });
 
@@ -30,7 +29,6 @@ namespace GraphQLAPI.Services.Courses
             var course = await _sql.ExecuteAsync(async db =>
             {
                 return await db.Courses
-                .Include(x => x.Instructor)
                 .FirstOrDefaultAsync(x => x.Id == Id);
             });
             return course;

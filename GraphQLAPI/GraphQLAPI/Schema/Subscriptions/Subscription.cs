@@ -1,4 +1,4 @@
-﻿using GraphQLAPI.Schema.Mutations;
+﻿using GraphQLAPI.Schema.Mutations.Courses;
 using HotChocolate.Execution;
 using HotChocolate.Subscriptions;
 

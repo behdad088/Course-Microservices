@@ -1,3 +1,4 @@
+using GraphQLAPI.DataLoader;
 using GraphQLAPI.Models.Internal;
 using GraphQLAPI.Schema.Mutations;
 using GraphQLAPI.Schema.Queries;
@@ -23,6 +24,8 @@ builder.Services
 
 builder.Services.AddScoped<CoursesRepository>();
 builder.Services.AddScoped<InstructorRepository>();
+builder.Services.AddScoped<InstructorDataLoader>();
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

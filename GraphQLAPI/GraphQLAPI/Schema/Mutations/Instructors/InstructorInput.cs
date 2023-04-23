@@ -1,4 +1,4 @@
-﻿namespace GraphQLAPI.Schema.Mutations
+﻿namespace GraphQLAPI.Schema.Mutations.Instructors
 {
     public class InstructorInput
     {

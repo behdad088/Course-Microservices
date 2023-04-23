@@ -1,4 +1,6 @@
-﻿using GraphQLAPI.Services.Courses;
+﻿using GraphQLAPI.Schema.Queries.Courses;
+using GraphQLAPI.Schema.Queries.Instructors;
+using GraphQLAPI.Services.Courses;
 
 namespace GraphQLAPI.Schema.Queries
 {
@@ -20,13 +22,8 @@ namespace GraphQLAPI.Schema.Queries
             {
                 Id = x.Id,
                 Name = x.Name,
-                Instructor = new InstructorType()
-                {
-                    Id = x.Instructor.Id,
-                    FirstName = x.Instructor.FirstName,
-                    LastName = x.Instructor.LastName,
-                    Salary = x.Instructor.Salary
-                }
+                Subject = Enum.TryParse<SubjectType>(x.Subject, out var enumValue) ? enumValue : null,
+                InstructorId = x.InstructorId,
             });
 
             return courseTypes;
@@ -40,19 +37,14 @@ namespace GraphQLAPI.Schema.Queries
             {
                 Id = course.Id,
                 Name = course.Name,
-                Instructor = new InstructorType()
-                {
-                    Id = course.Instructor.Id,
-                    FirstName = course.Instructor.FirstName,
-                    LastName = course.Instructor.LastName,
-                    Salary = course.Instructor.Salary
-                }
+                InstructorId = course.InstructorId,
+                Subject = Enum.TryParse<SubjectType>(course.Subject, out var enumValue) ? enumValue : null
             };
         }
 
         public async Task<InstructorType> GetInstructorById(Guid id)
         {
-            var instructor = await _instructorRepository.GetInstructorAsync(id);
+            var instructor = await _instructorRepository.GetInstructorByAsync(id);
             return new InstructorType
             {
                 Id = instructor.Id,
