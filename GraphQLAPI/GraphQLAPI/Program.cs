@@ -20,6 +20,8 @@ builder.Services
     .AddQueryType<Query>()
     .AddMutationType<Mutations>()
     .AddSubscriptionType<Subscription>()
+    .AddFiltering()
+    .AddSorting()
     .AddInMemorySubscriptions();
 
 builder.Services.AddScoped<CoursesRepository>();
