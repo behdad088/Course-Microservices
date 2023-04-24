@@ -31,7 +31,8 @@ namespace SQL.Database.Entities
             }
             else
             {
-                optionsBuilder.UseSqlServer(_connectionString);
+                optionsBuilder.UseSqlServer(_connectionString)
+                    .LogTo(s => Console.WriteLine(s));
             }
         }
 
