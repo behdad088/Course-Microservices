@@ -21,6 +21,7 @@ namespace GraphQLAPI.Schema.Queries
         // getting all the rows. IQueryable will allow Hot Chocolate to pick 
         // only the requested rows form DB. 
         [UsePaging(IncludeTotalCount = true, DefaultPageSize = 10)]
+        [UseProjection]
         [UseFiltering(typeof(CourseFilterType))]
         [UseSorting(typeof(CourseSortType))]
         public async Task<IEnumerable<CourseType>> GetCourses()
