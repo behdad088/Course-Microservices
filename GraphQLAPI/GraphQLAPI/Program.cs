@@ -22,6 +22,7 @@ builder.Services
     .AddSubscriptionType<Subscription>()
     .AddFiltering()
     .AddSorting()
+    .AddProjections()
     .AddInMemorySubscriptions();
 
 builder.Services.AddScoped<CoursesRepository>();

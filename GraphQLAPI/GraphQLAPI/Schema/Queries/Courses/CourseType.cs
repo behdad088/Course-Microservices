@@ -11,12 +11,13 @@ namespace GraphQLAPI.Schema.Queries.Courses
         public string? Name { get; set; }
         public SubjectType? Subject { get; set; }
 
+        [IsProjected(true)]
         public Guid? InstructorId { get; set; }
 
         [GraphQLNonNullType]
         public async Task<InstructorType> Instructor([Service] InstructorDataLoader instructorDataLoader)
         {
-            Instructor instructor = (Instructor)(await instructorDataLoader.LoadAsync(InstructorId));
+            Instructor instructor = (Instructor)await instructorDataLoader.LoadAsync(InstructorId);
 
             return new InstructorType
             {
