@@ -45,7 +45,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           
     - name: Docker meta
-      id: meta
+      id: docker_meta
       uses: docker/metadata-action@v4
       with:
           images: behdadkardgar/graphql_api_example
