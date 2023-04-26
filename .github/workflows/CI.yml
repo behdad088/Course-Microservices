@@ -40,6 +40,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push
+      working-directory: GraphQLAPI
       uses: docker/build-push-action@v4
       with:
           push: true
