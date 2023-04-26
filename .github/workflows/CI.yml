@@ -45,10 +45,10 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           
     - name: Docker meta
-        id: docker_meta
+        id: meta
         uses: docker/metadata-action@v4
         with:
-          images: bretfisher/docker-ci-automation
+          images: behdadkardgar/graphql_api_example
           flavor: |
             latest=false
           tags: |
@@ -94,3 +94,7 @@ jobs:
             ${{ steps.docker_meta.outputs.labels }}
             ```
           edit-mode: replace
+          
+          
+          
+          
