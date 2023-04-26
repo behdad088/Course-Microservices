@@ -9,6 +9,10 @@ on:
   pull_request:
     branches: [ "main" ]
 
+defaults:
+  run:
+    working-directory: GraphQLAPI
+
 jobs:
   build:
 
@@ -22,13 +26,10 @@ jobs:
         dotnet-version: 6.0.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: GraphQLAPI
     - name: Build
       run: dotnet build --no-restore
-      working-directory: GraphQLAPI
     - name: Test
       run: dotnet test --no-build --verbosity normal
-      working-directory: GraphQLAPI
 
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v2
@@ -40,7 +41,6 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build and push
-      working-directory: GraphQLAPI
       uses: docker/build-push-action@v4
       with:
           push: true
