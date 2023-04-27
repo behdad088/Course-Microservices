@@ -6,7 +6,7 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-CMD ["ls", "-l"]
+RUN ls
 WORKDIR /src
 COPY ["/SQL.Database/SQL.Database.csproj", "SQL.Database/"]
 RUN dotnet restore "SQL.Database/SQL.Database.csproj"
