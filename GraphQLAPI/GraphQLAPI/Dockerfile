@@ -7,8 +7,12 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
+COPY ["SQL.Database/SQL.Database.csproj", "SQL.Database/"]
+RUN dotnet restore "SQL.Database/SQL.Database.csproj"
+COPY . .
+
 COPY ["GraphQLAPI.csproj", "GraphQLAPI/"]
-RUN dotnet restore ./GraphQLAPI
+RUN dotnet restore "GraphQLAPI/GraphQLAPI.csproj"
 COPY . .
 WORKDIR "/src/GraphQLAPI"
 RUN dotnet build "GraphQLAPI.csproj" -c Release -o /app/build
