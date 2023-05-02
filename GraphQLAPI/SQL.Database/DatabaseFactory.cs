@@ -85,6 +85,11 @@ namespace SQL.Database
             return entity;
         }
 
+        public CourseDbContext GetCourseDbContext()
+        {
+            return GetNewDbContext();
+        }
+
         private CourseDbContext GetNewDbContext()
         {
             return new CourseDbContext(_connectionString);

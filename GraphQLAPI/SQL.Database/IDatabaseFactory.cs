@@ -9,5 +9,6 @@ namespace SQL.Database
         Task<TEntity> AddItemAsync<TEntity>(TEntity entity);
         Task<TEntity> UpdateItemAsync<TEntity>(TEntity entity);
         Task<TEntity> DeleteItemAsync<TEntity>(TEntity entity);
+        public CourseDbContext GetCourseDbContext();
     }
 }
