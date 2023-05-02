@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace SQL.Database.Entities
+﻿namespace SQL.Database.Entities
 {
     public partial class Course
     {
@@ -15,6 +12,7 @@ namespace SQL.Database.Entities
         public string? Name { get; set; }
         public string? Subject { get; set; }
         public Guid? InstructorId { get; set; }
+        public string CreatorId { get; set; }
 
         public virtual Instructor? Instructor { get; set; }
         public virtual ICollection<CourseStudent> CourseStudents { get; set; }

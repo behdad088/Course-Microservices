@@ -1,9 +1,12 @@
-﻿using GraphQLAPI.Schema.Mutations.Courses;
+﻿using FirebaseAdminAuthentication.DependencyInjection.Models;
+using GraphQLAPI.Schema.Mutations.Courses;
 using GraphQLAPI.Schema.Mutations.Instructors;
 using GraphQLAPI.Schema.Subscriptions;
 using GraphQLAPI.Services.Courses;
+using HotChocolate.Authorization;
 using HotChocolate.Subscriptions;
 using SQL.Database.Entities;
+using System.Security.Claims;
 
 namespace GraphQLAPI.Schema.Mutations
 {
@@ -18,13 +21,20 @@ namespace GraphQLAPI.Schema.Mutations
             _instructorRepository = instructorRepository ?? throw new ArgumentNullException(nameof(instructorRepository));
         }
 
-        public async Task<CourseResult> CreateCourse(CourseInput courseInput, [Service] ITopicEventSender topicEventSender)
+        [Authorize]
+        public async Task<CourseResult> CreateCourse(CourseInput courseInput,
+            [Service] ITopicEventSender topicEventSender,
+            ClaimsPrincipal claimsPrincipal)
         {
+
+            var userId = claimsPrincipal.FindFirstValue(FirebaseUserClaimType.ID);
+
             var course = new Course
             {
                 Name = courseInput.Name,
                 Subject = courseInput.SubjectType.ToString(),
-                InstructorId = courseInput.InstructorId
+                InstructorId = courseInput.InstructorId,
+                CreatorId = userId
             };
 
             course = await _coursesRepository.CreateCourseAsync(course);
@@ -64,23 +74,31 @@ namespace GraphQLAPI.Schema.Mutations
             return courseResult;
         }
 
-        public async Task<CourseResult> UpdateCourse(int id, CourseInput courseInput, [Service] ITopicEventSender topicEventSender)
+        [Authorize]
+        public async Task<CourseResult> UpdateCourse(Guid id, CourseInput courseInput,
+            [Service] ITopicEventSender topicEventSender, ClaimsPrincipal claimsPrincipal)
         {
-            var course = new Course
-            {
-                Name = courseInput.Name,
-                Subject = courseInput.SubjectType.ToString(),
-                InstructorId = courseInput.InstructorId
-            };
+            var dbCourse = await _coursesRepository.GetCourseByIdAsync(id);
+            var userId = claimsPrincipal.FindFirstValue(FirebaseUserClaimType.ID);
 
-            await _coursesRepository.UpdateCourseAsync(course);
+            if (dbCourse == null)
+                throw new GraphQLException(new Error("Course not found.", "COURSE_NOT_FOUND"));
+
+            if (userId != dbCourse.CreatorId)
+                throw new GraphQLException(new Error("You do not have permission to update this course.", "INVALID_PERMISSION"));
+
+            dbCourse.Name = courseInput.Name;
+            dbCourse.Subject = courseInput.SubjectType.ToString();
+            dbCourse.InstructorId = courseInput.InstructorId;
+
+            await _coursesRepository.UpdateCourseAsync(dbCourse);
             var courseResult = new CourseResult
             {
-                Id = course.Id,
-                Name = course.Name,
-                Subject = course.Subject,
-                Instructor = course.Instructor,
-                Ratings = course.Ratings.ToList(),
+                Id = dbCourse.Id,
+                Name = dbCourse.Name,
+                Subject = dbCourse.Subject,
+                Instructor = dbCourse.Instructor,
+                Ratings = dbCourse.Ratings.ToList(),
             };
 
             var updatedCourseTopic = $"{courseResult.Id}_{nameof(Subscription.CourseUpdated)}";
@@ -90,6 +108,7 @@ namespace GraphQLAPI.Schema.Mutations
             return courseResult;
         }
 
+        [Authorize(Policy = "IsAdmin")]
         public async Task<bool> DeleteCourseAsync(Guid id)
         {
             var isDeleted = await _coursesRepository.DeleteCourseAsync(id);
