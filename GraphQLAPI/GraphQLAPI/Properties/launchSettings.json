@@ -24,7 +24,10 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "publishAllPorts": true,
-      "useSSL": true
+      "useSSL": true,
+      "environmentVariables": {
+        "GOOGLE_APPLICATION_CREDENTIALS": "./firebase-config.json"
+      }
     }
   },
   "$schema": "https://json.schemastore.org/launchsettings.json",

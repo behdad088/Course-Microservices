@@ -36,6 +36,7 @@ builder.Services.AddAuthorization(o => o.AddPolicy("IsAdmin", p => p.RequireClai
 builder.Services.AddScoped<CoursesRepository>();
 builder.Services.AddScoped<InstructorRepository>();
 builder.Services.AddScoped<InstructorDataLoader>();
+builder.Services.AddScoped<UserDataLoader>();
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

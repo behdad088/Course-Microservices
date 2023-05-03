@@ -33,6 +33,7 @@ namespace GraphQLAPI.Schema.Queries
                 Name = x.Name,
                 Subject = Enum.TryParse<SubjectType>(x.Subject, out var enumValue) ? enumValue : null,
                 InstructorId = x.InstructorId,
+                CreatorId = x.CreatorId
             });
 
             return courseTypes;
@@ -62,7 +63,8 @@ namespace GraphQLAPI.Schema.Queries
                 Id = course.Id,
                 Name = course.Name,
                 InstructorId = course.InstructorId,
-                Subject = Enum.TryParse<SubjectType>(course.Subject, out var enumValue) ? enumValue : null
+                Subject = Enum.TryParse<SubjectType>(course.Subject, out var enumValue) ? enumValue : null,
+                CreatorId = course.CreatorId
             };
         }
 
