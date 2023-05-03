@@ -1,6 +1,7 @@
 ﻿using GraphQLAPI.DataLoader;
 using GraphQLAPI.Schema.Queries.Instructors;
 using GraphQLAPI.Schema.Queries.Students;
+using GraphQLAPI.Schema.Queries.Users;
 using SQL.Database.Entities;
 
 namespace GraphQLAPI.Schema.Queries.Courses
@@ -29,6 +30,18 @@ namespace GraphQLAPI.Schema.Queries.Courses
         }
 
         public IEnumerable<StudentType>? Students { get; set; }
+
+        public async Task<UserType?> Creator([Service] UserDataLoader userDataLoader)
+        {
+            if (string.IsNullOrEmpty(CreatorId))
+                return null;
+
+            var user = await userDataLoader.LoadAsync(CreatorId);
+            return user;
+        }
+
+        [IsProjected(true)]
+        public string? CreatorId { get; set; }
     }
 
     public enum SubjectType
