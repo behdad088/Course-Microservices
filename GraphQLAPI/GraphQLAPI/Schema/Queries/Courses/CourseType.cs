@@ -6,7 +6,7 @@ using SQL.Database.Entities;
 
 namespace GraphQLAPI.Schema.Queries.Courses
 {
-    public class CourseType
+    public class CourseType : ISearchResultType
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }
