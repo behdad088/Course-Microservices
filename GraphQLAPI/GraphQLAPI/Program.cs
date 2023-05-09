@@ -5,6 +5,7 @@ using GraphQLAPI.DataLoader;
 using GraphQLAPI.Models.Internal;
 using GraphQLAPI.Schema.Mutations;
 using GraphQLAPI.Schema.Queries;
+using GraphQLAPI.Schema.Queries.Courses;
 using GraphQLAPI.Schema.Subscriptions;
 using GraphQLAPI.Services.Courses;
 using SQL.Database;
@@ -23,6 +24,10 @@ builder.Services
     .AddQueryType<Query>()
     .AddMutationType<Mutations>()
     .AddSubscriptionType<Subscription>()
+    .AddType<CourseType>()
+    .AddType<InterfaceType>()
+    .AddTypeExtension<CourseQuery>()
+    .AddTypeExtension<InstructorQuery>()
     .AddFiltering()
     .AddSorting()
     .AddProjections()
